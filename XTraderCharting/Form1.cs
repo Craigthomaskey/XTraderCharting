@@ -54,7 +54,7 @@ namespace XTraderCharting
 
             ZoomAmountLabel.Text = ZoomTrack.Value.ToString();
             LineChart.ChartAreas[0].AxisX.Maximum = (DateTime.Now.AddSeconds(ZoomLevel) - StartTime).TotalSeconds;
-            CSChart.ChartAreas[0].AxisX.Maximum = (DateTime.Now.AddSeconds(ZoomLevel) - StartTime).TotalSeconds/5;
+            CSChart.ChartAreas[0].AxisX.Maximum = (DateTime.Now.AddSeconds(ZoomLevel) - StartTime).TotalSeconds/ CSInterval;
 
         }
 
@@ -164,9 +164,9 @@ namespace XTraderCharting
             time.IsVisibleInLegend = false;
             chart.Series.Add(time);
 
-            double X = ((new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 05, 00, 00) - StartTime).TotalSeconds)/5;
+            double X = ((new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 05, 00, 00) - StartTime).TotalSeconds)/ CSInterval;
             for (int i = 0; i < X; i++) { string LBL = DateTime.Now.AddSeconds(i*5).ToString("HH:mm:ss"); time.Points.AddXY(LBL, 0); }
-            chart.ChartAreas[0].AxisX.Maximum = (DateTime.Now.AddSeconds(ZoomLevel) - StartTime).TotalSeconds/5;
+            chart.ChartAreas[0].AxisX.Maximum = (DateTime.Now.AddSeconds(ZoomLevel) - StartTime).TotalSeconds/ CSInterval;
             chart.ChartAreas[0].AxisX.Minimum = double.NaN;
 
             // Set the style of the open-close marks
@@ -180,39 +180,83 @@ namespace XTraderCharting
             CSChart.Series["Price"]["PriceDownColor"] = "IndianRed";   //= "Red"; // <<== use text indexer for series
         }
 
-
-
+        int IntervalCount = 0;
         int CurrentPoint = 0;
         private void CSChartUpdateTimer_Tick(object sender, EventArgs e)
         {
-            if (Cont.CSLow == 0) Cont.CSLow = Cont.CSOpen; if (Cont.CSHigh == 0) Cont.CSHigh = Cont.CSOpen;
+            IntervalCount++;
+            if (!Recalcing)
+            {
+                if (IntervalCount > CSInterval||CurrentPoint == 0) { if (CSStartNewInterval()) IntervalCount = 0; }
+                else CSInterumData();
+            }
+
+            double[] TempString = new double[4];
+            TempString[0] = Cont.CSHigh * .25;
+            TempString[1] = Cont.CSLow * .25;
+            TempString[2] = Cont.CSOpen * .25;
+            TempString[3] = Cont.CSClose * .25;
+            DataPointDict.Add(DataPointDict.Count + 1, TempString);
+
+            CSChart.ChartAreas[0].AxisY.Maximum = (Cont.CSHigh + 5) * .25;
+            CSChart.ChartAreas[0].AxisY.Minimum = (Cont.CSLow - 5) * .25;
+
+            CSChart.ChartAreas[0].AxisX.Maximum = (DateTime.Now.AddSeconds(ZoomLevel) - StartTime).TotalSeconds / CSInterval;            
+        }
+
+        Dictionary<int, double[]> DataPointDict = new Dictionary<int, double[]>();
+        public bool CSStartNewInterval()
+        {
+            if (Cont.CSClose == 0) return false;
+            Cont.CSOpen = Cont.CSClose; Cont.CSHigh = Cont.CSClose; Cont.CSLow = Cont.CSClose;
+
             string time = DateTime.Now.ToString("HH:mm:ss");
             CurrentPoint = CSChart.Series["Price"].Points.AddXY(time, Cont.CSHigh * .25);
             CSChart.Series["Price"].Points[CurrentPoint].YValues[1] = Cont.CSLow * .25;
             CSChart.Series["Price"].Points[CurrentPoint].YValues[2] = Cont.CSOpen * .25;
             CSChart.Series["Price"].Points[CurrentPoint].YValues[3] = Cont.CSClose * .25;
-        
-            CSChart.ChartAreas[0].AxisY.Maximum = (Cont.CSHigh + 5) * .25;
-            CSChart.ChartAreas[0].AxisY.Minimum = (Cont.CSLow - 5) * .25;
 
-            CSChart.ChartAreas[0].AxisX.Maximum = (DateTime.Now.AddSeconds(ZoomLevel) - StartTime).TotalSeconds/5;
-
-            Cont.CSOpen = Cont.CSClose; Cont.CSHigh = 0; Cont.CSLow = 0;
+            return true;
         }
 
         public void CSInterumData()
         {
-            if (CurrentPoint == 0 || Cont.CSLow == 0) return;
-
+            if (Cont.CSLow == 0) Cont.CSLow = Cont.CSOpen; if (Cont.CSHigh == 0) Cont.CSHigh = Cont.CSOpen;
             CSChart.Series["Price"].Points[CurrentPoint].YValues[0] = Cont.CSHigh * .25;
             CSChart.Series["Price"].Points[CurrentPoint].YValues[1] = Cont.CSLow * .25;
             CSChart.Series["Price"].Points[CurrentPoint].YValues[2] = Cont.CSOpen * .25;
             CSChart.Series["Price"].Points[CurrentPoint].YValues[3] = Cont.CSClose * .25;
             CSChart.Series["Price"].Points.ResumeUpdates();
             CSChart.Update();
+        }
 
-            CSChart.ChartAreas[0].AxisY.Maximum = (Cont.CSHigh + 5) * .25;
-            CSChart.ChartAreas[0].AxisY.Minimum = (Cont.CSLow - 5) * .25;
+
+        bool Recalcing = false;
+        void AdjustCSInterval()
+        {
+            Recalcing = true;
+            int intervalcnt = 0;
+            CSChart.Series["Price"].Points.Clear(); CurrentPoint = 0;
+            for (int i = 0; i < DataPointDict.Count; i++)
+            {
+                intervalcnt++;
+                if (intervalcnt > CSInterval||CurrentPoint==0) { if (CSStartNewInterval()) IntervalCount = 0; }
+                else CSInterumData();
+            }
+            Recalcing = false;
+        }
+
+
+        int CSInterval =5;
+
+        private void SRB5_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked)
+            {
+                CSInterval = Convert.ToInt16(rb.Name.Substring(3));
+                AdjustCSInterval();
+            }
         }
     }
 }

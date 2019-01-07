@@ -69,14 +69,14 @@ namespace XTraderCharting
                 Price ltp = tsData.TradePrice;
                 Quantity ltq = tsData.TradeQuantity;
 
-                if (CSOpen == 0) CSOpen = ltp.ToTicks();
+              //  if (CSOpen == 0) CSOpen = ltp.ToTicks();
 
                 if (ltp.ToTicks() > CSHigh) CSHigh = ltp.ToTicks();
                 else if (ltp.ToTicks() < CSLow || CSLow == 0) CSLow = ltp.ToTicks();
 
                 CSClose = ltp.ToTicks();
             }
-            MainForm.CSInterumData();
+            //MainForm.CSInterumData();
         }
 
 

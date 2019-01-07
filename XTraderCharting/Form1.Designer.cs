@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.LineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ConnectionLbl = new System.Windows.Forms.Label();
             this.LineChartUpdateTimer = new System.Windows.Forms.Timer(this.components);
@@ -43,19 +43,19 @@
             this.CSChartUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.LinePanel = new System.Windows.Forms.Panel();
             this.CSPanel = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
+            this.IntervalPanel = new System.Windows.Forms.Panel();
+            this.IntervalLabel = new System.Windows.Forms.Label();
+            this.SRB120 = new System.Windows.Forms.RadioButton();
+            this.SRB10 = new System.Windows.Forms.RadioButton();
+            this.SRB60 = new System.Windows.Forms.RadioButton();
+            this.SRB30 = new System.Windows.Forms.RadioButton();
+            this.SRB5 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.LineChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ZoomTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CSChart)).BeginInit();
             this.LinePanel.SuspendLayout();
             this.CSPanel.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.IntervalPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // LineChart
@@ -64,10 +64,10 @@
             this.LineChart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.LineChart.BorderlineColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.LineChart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea3.BackColor = System.Drawing.SystemColors.Control;
-            chartArea3.Name = "ChartArea1";
-            this.LineChart.ChartAreas.Add(chartArea3);
-            this.LineChart.Location = new System.Drawing.Point(7, 10);
+            chartArea5.BackColor = System.Drawing.SystemColors.Control;
+            chartArea5.Name = "ChartArea1";
+            this.LineChart.ChartAreas.Add(chartArea5);
+            this.LineChart.Location = new System.Drawing.Point(8, 8);
             this.LineChart.Margin = new System.Windows.Forms.Padding(0);
             this.LineChart.Name = "LineChart";
             this.LineChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
@@ -146,11 +146,11 @@
             this.CSChart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.CSChart.BorderlineColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.CSChart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea4.BackColor = System.Drawing.SystemColors.Control;
-            chartArea4.BackSecondaryColor = System.Drawing.Color.White;
-            chartArea4.Name = "ChartArea1";
-            this.CSChart.ChartAreas.Add(chartArea4);
-            this.CSChart.Location = new System.Drawing.Point(11, 9);
+            chartArea6.BackColor = System.Drawing.SystemColors.Control;
+            chartArea6.BackSecondaryColor = System.Drawing.Color.White;
+            chartArea6.Name = "ChartArea1";
+            this.CSChart.ChartAreas.Add(chartArea6);
+            this.CSChart.Location = new System.Drawing.Point(10, 7);
             this.CSChart.Margin = new System.Windows.Forms.Padding(0);
             this.CSChart.Name = "CSChart";
             this.CSChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
@@ -160,14 +160,14 @@
             // 
             // CSChartUpdateTimer
             // 
-            this.CSChartUpdateTimer.Interval = 5000;
+            this.CSChartUpdateTimer.Interval = 1000;
             this.CSChartUpdateTimer.Tick += new System.EventHandler(this.CSChartUpdateTimer_Tick);
             // 
             // LinePanel
             // 
             this.LinePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LinePanel.Controls.Add(this.LineChart);
-            this.LinePanel.Location = new System.Drawing.Point(790, 5);
+            this.LinePanel.Location = new System.Drawing.Point(6, 8);
             this.LinePanel.Name = "LinePanel";
             this.LinePanel.Size = new System.Drawing.Size(779, 461);
             this.LinePanel.TabIndex = 7;
@@ -175,94 +175,99 @@
             // CSPanel
             // 
             this.CSPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.CSPanel.Controls.Add(this.panel1);
+            this.CSPanel.Controls.Add(this.IntervalPanel);
             this.CSPanel.Controls.Add(this.CSChart);
-            this.CSPanel.Location = new System.Drawing.Point(6, 6);
+            this.CSPanel.Location = new System.Drawing.Point(6, 8);
             this.CSPanel.Name = "CSPanel";
             this.CSPanel.Size = new System.Drawing.Size(779, 461);
             this.CSPanel.TabIndex = 8;
             this.CSPanel.Visible = false;
             // 
-            // panel1
+            // IntervalPanel
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.radioButton5);
-            this.panel1.Controls.Add(this.radioButton4);
-            this.panel1.Controls.Add(this.radioButton3);
-            this.panel1.Controls.Add(this.radioButton2);
-            this.panel1.Controls.Add(this.radioButton1);
-            this.panel1.Location = new System.Drawing.Point(685, 10);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(80, 145);
-            this.panel1.TabIndex = 7;
+            this.IntervalPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.IntervalPanel.Controls.Add(this.IntervalLabel);
+            this.IntervalPanel.Controls.Add(this.SRB120);
+            this.IntervalPanel.Controls.Add(this.SRB10);
+            this.IntervalPanel.Controls.Add(this.SRB60);
+            this.IntervalPanel.Controls.Add(this.SRB30);
+            this.IntervalPanel.Controls.Add(this.SRB5);
+            this.IntervalPanel.Location = new System.Drawing.Point(684, 8);
+            this.IntervalPanel.Name = "IntervalPanel";
+            this.IntervalPanel.Size = new System.Drawing.Size(80, 145);
+            this.IntervalPanel.TabIndex = 7;
             // 
-            // radioButton1
+            // IntervalLabel
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(8, 26);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(53, 18);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "5 Sec";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.IntervalLabel.AutoSize = true;
+            this.IntervalLabel.Location = new System.Drawing.Point(6, 6);
+            this.IntervalLabel.Name = "IntervalLabel";
+            this.IntervalLabel.Size = new System.Drawing.Size(42, 14);
+            this.IntervalLabel.TabIndex = 9;
+            this.IntervalLabel.Text = "Interval";
             // 
-            // radioButton2
+            // SRB120
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(8, 72);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(59, 18);
-            this.radioButton2.TabIndex = 0;
-            this.radioButton2.Text = "30 Sec";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.SRB120.AutoSize = true;
+            this.SRB120.Location = new System.Drawing.Point(8, 118);
+            this.SRB120.Name = "SRB120";
+            this.SRB120.Size = new System.Drawing.Size(65, 18);
+            this.SRB120.TabIndex = 0;
+            this.SRB120.Text = "120 Sec";
+            this.SRB120.UseVisualStyleBackColor = true;
+            this.SRB120.CheckedChanged += new System.EventHandler(this.SRB5_CheckedChanged);
             // 
-            // radioButton3
+            // SRB10
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(8, 95);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(59, 18);
-            this.radioButton3.TabIndex = 0;
-            this.radioButton3.Text = "60 Sec";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.SRB10.AutoSize = true;
+            this.SRB10.Location = new System.Drawing.Point(8, 49);
+            this.SRB10.Name = "SRB10";
+            this.SRB10.Size = new System.Drawing.Size(59, 18);
+            this.SRB10.TabIndex = 0;
+            this.SRB10.Text = "10 Sec";
+            this.SRB10.UseVisualStyleBackColor = true;
+            this.SRB10.CheckedChanged += new System.EventHandler(this.SRB5_CheckedChanged);
             // 
-            // radioButton4
+            // SRB60
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(8, 49);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(59, 18);
-            this.radioButton4.TabIndex = 0;
-            this.radioButton4.Text = "10 Sec";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.SRB60.AutoSize = true;
+            this.SRB60.Location = new System.Drawing.Point(8, 95);
+            this.SRB60.Name = "SRB60";
+            this.SRB60.Size = new System.Drawing.Size(59, 18);
+            this.SRB60.TabIndex = 0;
+            this.SRB60.Text = "60 Sec";
+            this.SRB60.UseVisualStyleBackColor = true;
+            this.SRB60.CheckedChanged += new System.EventHandler(this.SRB5_CheckedChanged);
             // 
-            // radioButton5
+            // SRB30
             // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(8, 118);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(65, 18);
-            this.radioButton5.TabIndex = 0;
-            this.radioButton5.Text = "120 Sec";
-            this.radioButton5.UseVisualStyleBackColor = true;
+            this.SRB30.AutoSize = true;
+            this.SRB30.Location = new System.Drawing.Point(8, 72);
+            this.SRB30.Name = "SRB30";
+            this.SRB30.Size = new System.Drawing.Size(59, 18);
+            this.SRB30.TabIndex = 0;
+            this.SRB30.Text = "30 Sec";
+            this.SRB30.UseVisualStyleBackColor = true;
+            this.SRB30.CheckedChanged += new System.EventHandler(this.SRB5_CheckedChanged);
             // 
-            // label1
+            // SRB5
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 14);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Interval";
+            this.SRB5.AutoSize = true;
+            this.SRB5.Checked = true;
+            this.SRB5.Location = new System.Drawing.Point(8, 26);
+            this.SRB5.Name = "SRB5";
+            this.SRB5.Size = new System.Drawing.Size(53, 18);
+            this.SRB5.TabIndex = 0;
+            this.SRB5.TabStop = true;
+            this.SRB5.Text = "5 Sec";
+            this.SRB5.UseVisualStyleBackColor = true;
+            this.SRB5.CheckedChanged += new System.EventHandler(this.SRB5_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1578, 502);
+            this.ClientSize = new System.Drawing.Size(800, 502);
             this.Controls.Add(this.CSPanel);
             this.Controls.Add(this.LinePanel);
             this.Controls.Add(this.FootPrintBttn);
@@ -281,8 +286,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.CSChart)).EndInit();
             this.LinePanel.ResumeLayout(false);
             this.CSPanel.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.IntervalPanel.ResumeLayout(false);
+            this.IntervalPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -302,13 +307,13 @@
         private System.Windows.Forms.Timer CSChartUpdateTimer;
         private System.Windows.Forms.Panel LinePanel;
         private System.Windows.Forms.Panel CSPanel;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Panel IntervalPanel;
+        private System.Windows.Forms.Label IntervalLabel;
+        private System.Windows.Forms.RadioButton SRB120;
+        private System.Windows.Forms.RadioButton SRB10;
+        private System.Windows.Forms.RadioButton SRB60;
+        private System.Windows.Forms.RadioButton SRB30;
+        private System.Windows.Forms.RadioButton SRB5;
     }
 }
 
