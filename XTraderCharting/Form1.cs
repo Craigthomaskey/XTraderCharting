@@ -187,8 +187,8 @@ namespace XTraderCharting
             IntervalCount++;
             if (!Recalcing)
             {
-                if (IntervalCount > CSInterval||CurrentPoint == 0) { if (CSStartNewInterval()) IntervalCount = 0; }
-                else CSInterumData();
+                if (IntervalCount > CSInterval||CurrentPoint == 0) { if (CSStartNewInterval(Cont.CSHigh, Cont.CSLow, Cont.CSOpen, Cont.CSClose)) IntervalCount = 0; }
+                else CSInterumData(Cont.CSHigh, Cont.CSLow, Cont.CSOpen, Cont.CSClose);
             }
 
             double[] TempString = new double[4];
@@ -205,27 +205,27 @@ namespace XTraderCharting
         }
 
         Dictionary<int, double[]> DataPointDict = new Dictionary<int, double[]>();
-        public bool CSStartNewInterval()
+        public bool CSStartNewInterval(double high, double low, double open, double close)
         {
-            if (Cont.CSClose == 0) return false;
-            Cont.CSOpen = Cont.CSClose; Cont.CSHigh = Cont.CSClose; Cont.CSLow = Cont.CSClose;
+            if (close == 0) return false;
+            open = close; high = close; low = close;
 
             string time = DateTime.Now.ToString("HH:mm:ss");
-            CurrentPoint = CSChart.Series["Price"].Points.AddXY(time, Cont.CSHigh * .25);
-            CSChart.Series["Price"].Points[CurrentPoint].YValues[1] = Cont.CSLow * .25;
-            CSChart.Series["Price"].Points[CurrentPoint].YValues[2] = Cont.CSOpen * .25;
-            CSChart.Series["Price"].Points[CurrentPoint].YValues[3] = Cont.CSClose * .25;
+            CurrentPoint = CSChart.Series["Price"].Points.AddXY(time, high * .25);
+            CSChart.Series["Price"].Points[CurrentPoint].YValues[1] = low * .25;
+            CSChart.Series["Price"].Points[CurrentPoint].YValues[2] = open * .25;
+            CSChart.Series["Price"].Points[CurrentPoint].YValues[3] = close * .25;
 
             return true;
         }
 
-        public void CSInterumData()
+        public void CSInterumData(double high, double low, double open, double close)
         {
-            if (Cont.CSLow == 0) Cont.CSLow = Cont.CSOpen; if (Cont.CSHigh == 0) Cont.CSHigh = Cont.CSOpen;
-            CSChart.Series["Price"].Points[CurrentPoint].YValues[0] = Cont.CSHigh * .25;
-            CSChart.Series["Price"].Points[CurrentPoint].YValues[1] = Cont.CSLow * .25;
-            CSChart.Series["Price"].Points[CurrentPoint].YValues[2] = Cont.CSOpen * .25;
-            CSChart.Series["Price"].Points[CurrentPoint].YValues[3] = Cont.CSClose * .25;
+            if (low == 0) low = open; if (high == 0) high = open;
+            CSChart.Series["Price"].Points[CurrentPoint].YValues[0] = high * .25;
+            CSChart.Series["Price"].Points[CurrentPoint].YValues[1] = low * .25;
+            CSChart.Series["Price"].Points[CurrentPoint].YValues[2] = open * .25;
+            CSChart.Series["Price"].Points[CurrentPoint].YValues[3] = close * .25;
             CSChart.Series["Price"].Points.ResumeUpdates();
             CSChart.Update();
         }
@@ -237,12 +237,12 @@ namespace XTraderCharting
             Recalcing = true;
             int intervalcnt = 0;
             CSChart.Series["Price"].Points.Clear(); CurrentPoint = 0;
-            for (int i = 0; i < DataPointDict.Count; i++)
+            for (int i = 1; i < DataPointDict.Count+1; i++)
             {
-                intervalcnt++;
-                if (intervalcnt > CSInterval||CurrentPoint==0) { if (CSStartNewInterval()) IntervalCount = 0; }
-                else CSInterumData();
-            }
+                intervalcnt++; double[] tempDoub = DataPointDict[i];
+                if (intervalcnt > CSInterval||CurrentPoint==0) { if (CSStartNewInterval(tempDoub[0], tempDoub[1], tempDoub[2], tempDoub[3])) IntervalCount = 0; }
+                else CSInterumData(tempDoub[0], tempDoub[1], tempDoub[2], tempDoub[3]);
+        }
             Recalcing = false;
         }
 
